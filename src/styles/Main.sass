@@ -1,0 +1,208 @@
+@import "./_Variables"
+@import "./_Mixins"
+@import "./_Header"
+
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+html
+  font-size: 16px
+  font-family: Arial, Helvetica, sans-serif
+
+body
+  @include color1(.1)
+
+main
+  @include flex-mother($align-items: flex-start, $flex-wrap: wrap)
+  max-width: 1200px
+  max-height: calc(100vh - #{$headerHeight})
+  margin: 50px auto
+
+//Right side
+
+.taskPanel__wrap
+  @include flex-mother($flex-direction: column, $align-items: center)
+  flex-basis: 50%
+  min-height: 40vh
+  border: 1px solid $color3
+  border-radius: 5px
+  background-color: white
+  .taskPanel__title
+    padding: 10px 20px
+    width: 100%
+    border-bottom: 1px solid $color2
+    text-align: center
+    font-size: 2rem
+    font-weight: bold
+    font-style: italic
+    font-family: Courier New, Courier, monospace
+    word-break: break-word
+    color: $color2
+  .taskPanel__desc
+    flex-grow: 1
+    @include flex-mother($flex-direction: column)
+    height: 60%
+    width: 100%
+    padding: 0 20px 20px 20px
+    border-bottom: 1px solid $color2
+    .taskPanel__desc-title
+      margin-top: 5px
+      font-size: .9rem
+      color: $color2
+    .taskPanel__desc-text
+      margin-top: 5px
+      font-size: .9rem
+    .taskPanel__desc-text-empty
+      font-size: .9rem
+      text-align: center
+      color: rgba(0,0,0,.4)
+  .taskPanel__date-edit
+    @include  flex-mother($align-items: flex-start, $justify-content: flex-start)
+    position: relative
+    width: 100%
+    padding: 0 20px 10px 20px
+    .taskPanel__deadline
+      @include flex-mother($flex-direction: column)
+      padding-right: 20px
+      .taskPanel__deadline-title
+        margin-top: 5px
+        font-size: .9rem
+        color: $color2
+      .taskPanel__deadline-date
+        font-size: .8rem
+    .taskPanel__addDate
+      @include flex-mother($flex-direction: column)
+      padding-right: 20px
+      .taskPanel__addDate-title
+        margin-top: 5px
+        font-size: .9rem
+        color: $color2
+      .taskPanel__addDate-date
+        font-size: .8rem
+    button
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      width: 100px
+      border: 1px solid $color3
+      border-top-left-radius: 5px
+      border-bottom-left-radius: 5px
+      font-size: 1.1rem
+      @include color3()
+      color: $color2
+      transition: .2s
+      cursor: pointer
+      &:hover
+        background-color: rgba(43,89,117,.9)
+
+
+
+
+
+
+//Left side
+
+.taskList__list
+  flex-basis: 50%
+  height: calc(100vh - #{$headerHeight} - 150px)
+  padding: 0 10px
+  list-style-type: none
+  overflow-y: scroll
+  scrollbar-width: thin
+  &::-webkit-scrollbar 
+    width: 6px
+  &::-webkit-scrollbar-track 
+    @include color1(.5)
+    border-radius: 3px
+  &::-webkit-scrollbar-thumb 
+    @include color3(.5)
+    border-radius: 3px
+  .taskList__addTask
+    form
+      position: relative
+      .taskList__addTask-text-input
+        width: calc(100% - 100px)
+        height: 50px
+        padding: 3px 150px 3px 5px
+        border: 1px solid $color3
+        border-top-left-radius: 5px
+        border-bottom-left-radius: 5px
+        font-size: 1.3rem
+        transition: .2s
+        &:focus
+          outline: none
+          border-color: $color1
+      .taskList__addTask-deadline-input
+        position: absolute
+        top: 1px
+        right: 100px
+        height: 48px
+        width: 140px
+        border: 0
+        background-color: transparent
+        &:focus
+          outline: 2px solid $color2
+      .taskList__addTask-deadline-title
+        position: absolute
+        top: 2px
+        left: calc(100% - 100px - 140px)
+        font-size: .7rem
+        font-weight: bold
+        color: $color3
+      button
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        width: 100px
+        border: 1px solid $color3
+        border-top-right-radius: 5px
+        border-bottom-right-radius: 5px
+        font-size: 1.1rem
+        @include color3()
+        color: $color2
+        transition: .2s
+        cursor: pointer
+        &:hover
+          background-color: rgba(43,89,117,.9)
+  .taskList__item
+    @include flex-mother($align-items: center)
+    position: relative
+    height: 50px
+    margin: 2px 0
+    padding: 10px 15px
+    border-radius: 5px
+    border: 1px solid $color3
+    background-color: white
+    color: black
+    word-break: break-word
+    transition: .2s
+    cursor: pointer
+    &.taskList_item-active
+      @include color2()
+      box-shadow: inset 0 0 10px 2px rgba(43,89,117,.3)
+      color: white
+    .taskList__checkbox
+      @include radio()
+    .taskList__item-title
+      padding: 0 110px 0 10px
+      line-height: 25px
+    .taskList__item-deadline
+      position: absolute
+      top: 50%
+      left: calc( 100% - 110px)
+      transform: translate(0,-20%)
+      font-size: .8rem
+    .taskList__item-deadline-title
+      position: absolute
+      top: 5px
+      left: calc( 100% - 110px)
+      font-size: .7rem
+      font-weight: bold
+      color: $color3
+    .taskList__item-title-active,.taskList__item-deadline-active
+      text-decoration: line-through
+      text-decoration-color: $color3

@@ -1,0 +1,59 @@
+@import "./_Variables"
+  
+@mixin flex-mother($flex-direction: row,$justify-content: stretch,$align-items: stretch,$flex-wrap: nowrap) 
+  display: flex
+  flex-direction: $flex-direction
+  justify-content: $justify-content
+  align-items: $align-items
+  flex-wrap: $flex-wrap  
+
+@mixin radio($height: 25px, $width: 25px) 
+  label 
+    display: block
+    position: relative
+    height: $height
+    width: $width
+    font-size: 22px
+    -webkit-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+    input 
+      z-index: 998
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      height: $height
+      width: $width
+      opacity: 0
+      cursor: pointer
+    span 
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      height: $height
+      width: $width
+      border-radius: 50%
+      box-shadow: 0 0 0px 1px $color3
+      background-color: #fff
+      cursor: pointer
+    input:checked ~ span 
+      @include color3()
+    span:after 
+      content: ""
+      position: absolute
+      display: none
+    input:checked ~ span:after 
+      display: block
+    span:after 
+      top: calc((#{$height} - 1px) / 2)
+      left: calc((#{$width} - 0px) / 2)
+      transform: translate(-50%, -50%)
+      width: calc(#{$width} / 2.5)
+      height: calc(#{$height} / 2.5)
+      border-radius: 50%
+      background: white
+
+
