@@ -11,33 +11,38 @@ const AddTask = () => {
 
   const addTaskFunc = (e) => {
     e.preventDefault();
-    addTask(addTaskText,"","",addTaskDate);
+
+    const now = new Date();
+    const day = now.getDate() < 10 ? "0" + now.getDate() : now.getDate();
+    const month = now.getMonth() + 1 < 10 ? "0" + now.getMonth() + 1 : now.getMonth() + 1;
+    const date = `${now.getFullYear()}-${month}-${day}`
+    addTask(addTaskText, "", date, addTaskDate);
     setaddTaskDate("");
     setaddTaskText("");
   }
 
-  return ( <li className="taskList__addTask">
-    <form onSubmit={(e)=>{addTaskFunc(e);}}>
-      <input 
-        className="taskList__addTask-text-input" 
-        type="text" 
-        placeholder="Enter task" 
-        value={addTaskText} 
-        onChange={(e)=>{setaddTaskText(e.target.value)}} 
+  return (<li className="taskList__addTask">
+    <form onSubmit={(e) => { addTaskFunc(e); }}>
+      <input
+        className="taskList__addTask-text-input"
+        type="text"
+        placeholder="Enter task"
+        value={addTaskText}
+        onChange={(e) => { setaddTaskText(e.target.value) }}
         required
         minLength="3"
         maxLength="45"
       />
       <span className="taskList__addTask-deadline-title">Add deadline:</span>
-      <input 
-        className="taskList__addTask-deadline-input" 
-        type="date" value={addTaskDate} 
-        onChange={(e) => {setaddTaskDate(e.target.value ? e.target.value : "Add deadline")}}
+      <input
+        className="taskList__addTask-deadline-input"
+        type="date" value={addTaskDate}
+        onChange={(e) => { setaddTaskDate(e.target.value ? e.target.value : "Add deadline") }}
         required
       />
       <button type="submit">Add task</button>
     </form>
   </li>);
 }
- 
+
 export default AddTask;

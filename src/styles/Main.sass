@@ -25,12 +25,13 @@ main
 .taskPanel__wrap
   @include flex-mother($flex-direction: column, $align-items: center)
   flex-basis: 50%
+  position: relative
   min-height: 40vh
   border: 1px solid $color3
   border-radius: 5px
   background-color: white
   .taskPanel__title
-    padding: 10px 20px
+    padding: 20px 20px 10px 20px
     width: 100%
     border-bottom: 1px solid $color2
     text-align: center
@@ -40,6 +41,27 @@ main
     font-family: Courier New, Courier, monospace
     word-break: break-word
     color: $color2
+  .taskPanel__checked
+    @include flex-mother()
+    position: absolute
+    top: 10px
+    right: 10px
+    .taskPanel__checked-dot
+      display: block
+      height: 20px
+      width: 20px
+      border-radius: 50%
+      background-color: #444
+    .taskPanel__checked-text
+      padding-left: 5px
+      line-height: 20px
+      color: #444
+  .taskPanel__checked-true
+    .taskPanel__checked-dot
+      background-color: green
+    .taskPanel__checked-text
+      color: green
+
   .taskPanel__desc
     flex-grow: 1
     @include flex-mother($flex-direction: column)
@@ -81,15 +103,14 @@ main
         color: $color2
       .taskPanel__addDate-date
         font-size: .8rem
-    button
+    .taskPanel__edit-btn
       position: absolute
       top: 0
       bottom: 0
-      right: 0
+      right: 110px
       width: 100px
       border: 1px solid $color3
-      border-top-left-radius: 5px
-      border-bottom-left-radius: 5px
+      border-radius: 5px
       font-size: 1.1rem
       @include color3()
       color: $color2
@@ -97,11 +118,40 @@ main
       cursor: pointer
       &:hover
         background-color: rgba(43,89,117,.9)
-
-
-
-
-
+    .taskPanel__delete-btn
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      width: 100px
+      border: 1px solid crimson
+      border-top-left-radius: 5px
+      border-bottom-left-radius: 5px
+      font-size: 1.1rem
+      background-color: crimson
+      color: cornsilk
+      transition: .2s
+      cursor: pointer
+      &:hover
+        opacity: .8
+    .taskPanel__edit-btn-accept
+      border: 1px solid green
+      background-color: green
+      color: white
+      &:hover
+        background-color: green
+        opacity: .8
+    .taskPanel__edit-btn-abort
+      right: 0
+      width: 100px
+      border: 1px solid crimson
+      border-top-left-radius: 5px
+      border-bottom-left-radius: 5px
+      background-color: crimson
+      color: cornsilk
+      &:hover
+        background-color: crimson
+        opacity: .8
 
 //Left side
 
@@ -112,12 +162,13 @@ main
   list-style-type: none
   overflow-y: scroll
   scrollbar-width: thin
-  &::-webkit-scrollbar 
+  scrollbar-color: $color3 $color2
+  &::-webkit-scrollbar
     width: 6px
-  &::-webkit-scrollbar-track 
+  &::-webkit-scrollbar-track
     @include color1(.5)
     border-radius: 3px
-  &::-webkit-scrollbar-thumb 
+  &::-webkit-scrollbar-thumb
     @include color3(.5)
     border-radius: 3px
   .taskList__addTask
@@ -179,7 +230,7 @@ main
     background-color: white
     color: black
     word-break: break-word
-    transition: .2s
+    transition: .1s
     cursor: pointer
     &.taskList_item-active
       @include color2()

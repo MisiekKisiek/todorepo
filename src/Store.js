@@ -1,6 +1,6 @@
-import { makeObservable, makeAutoObservable, observable, configure, action } from 'mobx';
+import { makeObservable, observable, action } from 'mobx';
 
-class TaskItemStore{
+class TaskItemStore {
   id = "";
   title = "";
   desc = "";
@@ -8,8 +8,8 @@ class TaskItemStore{
   deadline = "";
   checked = false;
 
-  constructor(id, title, desc, addDate, deadline){
-    makeObservable(this,{
+  constructor(id, title, desc, addDate, deadline) {
+    makeObservable(this, {
       id: observable,
       title: observable,
       desc: observable,
@@ -37,21 +37,21 @@ class TaskItemStore{
   }
 }
 
-class TaskStore{
+class TaskStore {
   taskList = [];
   activeTaskID = "";
 
-  constructor(){
-    makeObservable(this,{
+  constructor() {
+    makeObservable(this, {
       taskList: observable,
       activeTaskID: observable,
       addTask: action,
       removeTask: action,
       setActiveTask: action,
-    },{proxy: false});
+    }, { proxy: false });
   }
 
-  addTask = ( title, desc, addDate, deadline ) => {
+  addTask = (title, desc, addDate, deadline) => {
     const setID = () => {
       let id = Math.random();
       while (this.taskList.find(e => e.id === id)) {
@@ -63,8 +63,8 @@ class TaskStore{
   }
 
   removeTask = (id) => {
-    const taskIndex = this.taskList.findIndex(e=> e.id === id);
-    this.taskList.splice(taskIndex,1);
+    const taskIndex = this.taskList.findIndex(e => e.id === id);
+    this.taskList.splice(taskIndex, 1);
   }
 
   setActiveTask = (id) => {
