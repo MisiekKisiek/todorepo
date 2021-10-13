@@ -30,7 +30,7 @@ main
   border: 1px solid $color3
   border-radius: 5px
   background-color: white
-  .taskPanel__title
+  .taskPanel__title, .taskPanel__title-input
     padding: 20px 20px 10px 20px
     width: 100%
     border-bottom: 1px solid $color2
@@ -41,6 +41,14 @@ main
     font-family: Courier New, Courier, monospace
     word-break: break-word
     color: $color2
+  .taskPanel__title-input
+    width: calc(100% - 40px)
+    margin: 35px 20px 10px 20px
+    padding: 0
+    border: 1px solid rgb(118, 118, 118)
+    border-radius: 2px
+    &:focus
+        outline-color: $color3
   .taskPanel__checked
     @include flex-mother()
     position: absolute
@@ -61,7 +69,6 @@ main
       background-color: green
     .taskPanel__checked-text
       color: green
-
   .taskPanel__desc
     flex-grow: 1
     @include flex-mother($flex-direction: column)
@@ -73,13 +80,18 @@ main
       margin-top: 5px
       font-size: .9rem
       color: $color2
-    .taskPanel__desc-text
+    .taskPanel__desc-text, .taskPanel__desc-title-input
       margin-top: 5px
       font-size: .9rem
     .taskPanel__desc-text-empty
       font-size: .9rem
       text-align: center
       color: rgba(0,0,0,.4)
+    .taskPanel__desc-title-input
+      flex-grow: 1
+      resize: none
+      &:focus
+        outline-color: $color3
   .taskPanel__date-edit
     @include  flex-mother($align-items: flex-start, $justify-content: flex-start)
     position: relative
@@ -87,6 +99,7 @@ main
     padding: 0 20px 10px 20px
     .taskPanel__deadline
       @include flex-mother($flex-direction: column)
+      position: relative
       padding-right: 20px
       .taskPanel__deadline-title
         margin-top: 5px

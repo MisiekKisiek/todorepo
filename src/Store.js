@@ -40,26 +40,23 @@ class TaskItemStore {
 class TaskStore {
   taskList = [];
   activeTaskID = "";
+  isEditing = false;
 
   constructor() {
     makeObservable(this, {
       taskList: observable,
       activeTaskID: observable,
+      isEditing: observable,
       addTask: action,
       removeTask: action,
       setActiveTask: action,
+      setisEditing: action,
     }, { proxy: false });
   }
 
   addTask = (title, desc, addDate, deadline) => {
-    const setID = () => {
-      let id = Math.random();
-      while (this.taskList.find(e => e.id === id)) {
-        id = Math.random();
-      }
-      return id;
-    }
-    this.taskList.push(new TaskItemStore(setID(), title, desc, addDate, deadline));
+    const id = Math.random();
+    this.taskList.push(new TaskItemStore(id, title, desc, addDate, deadline));
   }
 
   removeTask = (id) => {
@@ -68,7 +65,11 @@ class TaskStore {
   }
 
   setActiveTask = (id) => {
-    this.activeTaskID = id
+    this.activeTaskID = id;
+  }
+
+  setisEditing = (value) => {
+    this.isEditing = value;
   }
 }
 

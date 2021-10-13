@@ -14,14 +14,12 @@ import TaskPanel from './components/TaskPanel';
 import AddTask from './components/AddTask';
 
 const App = observer(() => {
-  const { taskList, addTask, removeTask } = store;
+  const { taskList, removeTask } = store;
 
   const renderTasks = (taskList) => {
     const tasks = taskList.slice().sort((el, prevEl) => el.deadline > prevEl.deadline).map(e => <TaskListItem key={e.id} task={e} removeTask={removeTask} />);
     return tasks;
   }
-
-  console.log(Object.values(taskList));
 
   return (<>
     <Header />
@@ -31,9 +29,6 @@ const App = observer(() => {
         <AddTask />
         {renderTasks(taskList)}
       </ul>
-      <button onClick={() => { addTask("fsafas", "fsafsa", "fsafas", "yryrt") }}>add</button>
-      <button onClick={() => { removeTask("fsa") }}>remove</button>
-      <button onClick={() => { console.log(taskList.slice()) }}>show</button>
     </main>
   </>);
 })

@@ -5,10 +5,14 @@ import { observer } from 'mobx-react-lite';
 import { store } from '../Store.js';
 
 const TaskListItem = observer(({task}) => {
-  const { id, title,  deadline, editTask, checked, checkTask} = task;
-  const {activeTaskID, setActiveTask} = store;
+  const { id, title,  deadline,  checked, checkTask } = task;
+  const {activeTaskID, setActiveTask, isEditing} = store;
 
-  return ( <li className={`taskList__item ${activeTaskID === id? "taskList_item-active":""}`} onClick={()=>{setActiveTask(id)}}>
+  return ( <li className={`taskList__item ${activeTaskID === id? "taskList_item-active":""}`} onClick={()=>{
+    if(!isEditing){
+      setActiveTask(id);
+    }
+  }}>
     <div className="taskList__checkbox">
       <label htmlFor={`task `}>
           <input type="checkbox" name={`task `} value={checked} defaultChecked={checked}

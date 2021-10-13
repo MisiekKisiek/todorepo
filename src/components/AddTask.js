@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { store } from '../Store.js';
 
 const AddTask = () => {
-  const { addTask } = store;
+  const { addTask, isEditing } = store;
 
   const [addTaskText, setaddTaskText] = useState("");
   const [addTaskDate, setaddTaskDate] = useState("deadline");
@@ -12,13 +12,15 @@ const AddTask = () => {
   const addTaskFunc = (e) => {
     e.preventDefault();
 
-    const now = new Date();
-    const day = now.getDate() < 10 ? "0" + now.getDate() : now.getDate();
-    const month = now.getMonth() + 1 < 10 ? "0" + now.getMonth() + 1 : now.getMonth() + 1;
-    const date = `${now.getFullYear()}-${month}-${day}`
-    addTask(addTaskText, "", date, addTaskDate);
-    setaddTaskDate("");
-    setaddTaskText("");
+    if(!isEditing){
+      const now = new Date();
+      const day = now.getDate() < 10 ? "0" + now.getDate() : now.getDate();
+      const month = now.getMonth() + 1 < 10 ? "0" + now.getMonth() + 1 : now.getMonth() + 1;
+      const date = `${now.getFullYear()}-${month}-${day}`
+      addTask(addTaskText, "", date, addTaskDate);
+      setaddTaskDate("");
+      setaddTaskText("");
+    }
   }
 
   return (<li className="taskList__addTask">
@@ -37,7 +39,7 @@ const AddTask = () => {
       <input
         className="taskList__addTask-deadline-input"
         type="date" value={addTaskDate}
-        onChange={(e) => { setaddTaskDate(e.target.value ? e.target.value : "Add deadline") }}
+        onChange={(e) => { setaddTaskDate(e.target.value) }}
         required
       />
       <button type="submit">Add task</button>
