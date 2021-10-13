@@ -1,7 +1,7 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 
 //Mobexior
+import { observer } from 'mobx-react-lite';
 import { store } from './Store.js';
 
 //Styles
@@ -16,19 +16,21 @@ import AddTask from './components/AddTask';
 const App = observer(() => {
   const { taskList, removeTask } = store;
 
-  const renderTasks = (taskList) => {
+  const TaskList = observer(() => {
     const tasks = taskList.slice().sort((el, prevEl) => el.deadline > prevEl.deadline).map(e => <TaskListItem key={e.id} task={e} removeTask={removeTask} />);
-    return tasks;
-  }
+
+    return (<ul className="taskList__list">
+      <AddTask />
+      {tasks}
+    </ul>);
+  })
 
   return (<>
     <Header />
     <main className="main">
       <TaskPanel />
-      <ul className="taskList__list">
-        <AddTask />
-        {renderTasks(taskList)}
-      </ul>
+
+      <TaskList />
     </main>
   </>);
 })

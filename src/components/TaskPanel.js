@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
 //Mobexior
 import { store } from '../Store.js';
 
 const TaskPanel = observer(() => {
-  const { taskList, activeTaskID, removeTask, isEditing, setisEditing } = store;
+  const { taskList, activeTaskID, isEditing, setisEditing } = store;
 
   const activeTask = taskList.length > 0 ? taskList.slice()[taskList.findIndex(e => e.id === activeTaskID)] : null;
 
@@ -15,25 +16,31 @@ const TaskPanel = observer(() => {
   const [deadlineInput, setdeadlineInput] = useState(activeTask ? activeTask.deadline : "");
 
   const cleanInputs = () => {
-    settitleInput(activeTask.title);
-    setdescInput(activeTask.desc);
-    setaddDateInput(activeTask.addDate);
-    setdeadlineInput(activeTask.deadline);
+    if (isEditing) {
+      settitleInput(activeTask.title);
+      setdescInput(activeTask.desc);
+      setaddDateInput(activeTask.addDate);
+      setdeadlineInput(activeTask.deadline);
+    }
   };
 
-  const titleElement = (activeTask ? isEditing ? 
-  <input 
-    className="taskPanel__title-input" 
-    type="text" 
-    name="title" 
-    id="title" 
-    placeholder="Enter title"
-    maxLength="150"
-    value={titleInput} 
-    onChange={(e)=>{settitleInput(e.target.value)}}
-  /> : 
-  <span className="taskPanel__title">{activeTask.title}</span> : 
-  <span className="taskPanel__title">Add or select task</span>);
+  useEffect(() => {
+    cleanInputs();
+  }, [isEditing]);
+
+  const titleElement = (activeTask ? isEditing ?
+    <input
+      className="taskPanel__title-input"
+      type="text"
+      name="title"
+      id="title"
+      placeholder="Enter title"
+      maxLength="150"
+      value={titleInput}
+      onChange={(e) => { settitleInput(e.target.value) }}
+    /> :
+    <span className="taskPanel__title">{activeTask.title}</span> :
+    <span className="taskPanel__title">Add or select task</span>);
 
   const checkedElement = (activeTask ? (<div className={`taskPanel__checked ${activeTask.checked ? "taskPanel__checked-true" : ""}`}>
     <span className="taskPanel__checked-dot"></span>
@@ -43,50 +50,50 @@ const TaskPanel = observer(() => {
   const descriptionElement = (activeTask ?
     <div className="taskPanel__desc">
       <span className="taskPanel__desc-title">Description:</span>
-      { isEditing ? 
-        <textarea 
-        name="desc" 
-        id="desc"
-        className="taskPanel__desc-title-input" 
-        placeholder="Edit task description" 
-        minLength="3"
-        maxLength="45"
-        value={descInput}
-        onChange={(e)=>{setdescInput(e.target.value)}}/>  
+      {isEditing ?
+        <textarea
+          name="desc"
+          id="desc"
+          className="taskPanel__desc-title-input"
+          placeholder="Edit task description"
+          minLength="3"
+          maxLength="45"
+          value={descInput}
+          onChange={(e) => { setdescInput(e.target.value) }} />
         : <span className={`taskPanel__desc-text ${activeTask.desc === "" ? "taskPanel__desc-text-empty" : ""}`}>{activeTask.desc === "" ? "Edit to add description to task" : activeTask.desc}</span>}
     </div> : null);
 
   const datesElement = (activeTask ? (<div className="taskPanel__date-edit">
     <div className="taskPanel__deadline">
       <span className="taskPanel__deadline-title">Deadline:</span>
-      {isEditing ? <input 
-        className="taskPanel__deadline-date-input" 
-        type="date" 
-        name="deadline" 
-        id="deadline" 
+      {isEditing ? <input
+        className="taskPanel__deadline-date-input"
+        type="date"
+        name="deadline"
+        id="deadline"
         placeholder="Enter title"
         value={deadlineInput}
-        onChange={(e)=>{
+        onChange={(e) => {
           setdeadlineInput(e.target.value)
         }}
-      /> : 
-      <span className="taskPanel__deadline-date">{activeTask.deadline}</span>}
+      /> :
+        <span className="taskPanel__deadline-date">{activeTask.deadline}</span>}
     </div>
     <div className="taskPanel__addDate">
       <span className="taskPanel__addDate-title">Add date:</span>
-      {isEditing ? <input 
-        className="taskPanel__addDate-date-input" 
-        type="date" 
-        name="deadline" 
-        id="deadline" 
+      {isEditing ? <input
+        className="taskPanel__addDate-date-input"
+        type="date"
+        name="deadline"
+        id="deadline"
         placeholder="Enter title"
         value={addDateInput}
-        onChange={(e)=>{
+        onChange={(e) => {
           setaddDateInput(e.target.value)
         }}
-      /> : 
-      <span className="taskPanel__addDate-date">{activeTask.addDate}</span>}
-      
+      /> :
+        <span className="taskPanel__addDate-date">{activeTask.addDate}</span>}
+
     </div>
     {isEditing ?
       <>
@@ -107,24 +114,8 @@ const TaskPanel = observer(() => {
           }}>
           Abort
         </button>
-      </> :
-      <>
-        <button
-          className="taskPanel__edit-btn"
-          onClick={() => { 
-            cleanInputs();
-            setisEditing(true);
-          }}>
-          Edit
-        </button>
-        <button
-          className="taskPanel__delete-btn"
-          onClick={() => { removeTask(activeTaskID) }}>
-          Delete
-        </button>
-      </>}
+      </> : null}
   </div>) : null);
-
 
   return (<div className="taskPanel__wrap">
     {titleElement}

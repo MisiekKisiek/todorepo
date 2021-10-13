@@ -20,7 +20,7 @@ main
   max-height: calc(100vh - #{$headerHeight})
   margin: 50px auto
 
-//Right side
+//Left side
 
 .taskPanel__wrap
   @include flex-mother($flex-direction: column, $align-items: center)
@@ -48,7 +48,7 @@ main
     border: 1px solid rgb(118, 118, 118)
     border-radius: 2px
     &:focus
-        outline-color: $color3
+      outline-color: $color3
   .taskPanel__checked
     @include flex-mother()
     position: absolute
@@ -166,7 +166,7 @@ main
         background-color: crimson
         opacity: .8
 
-//Left side
+//Right side
 
 .taskList__list
   flex-basis: 50%
@@ -252,21 +252,43 @@ main
     .taskList__checkbox
       @include radio()
     .taskList__item-title
-      padding: 0 110px 0 10px
+      padding: 0 200px 0 10px
       line-height: 25px
     .taskList__item-deadline
       position: absolute
       top: 50%
-      left: calc( 100% - 110px)
+      left: calc( 100% - 200px)
       transform: translate(0,-20%)
       font-size: .8rem
     .taskList__item-deadline-title
       position: absolute
       top: 5px
-      left: calc( 100% - 110px)
+      left: calc( 100% - 200px)
       font-size: .7rem
       font-weight: bold
       color: $color3
     .taskList__item-title-active,.taskList__item-deadline-active
       text-decoration: line-through
       text-decoration-color: $color3
+    .taskList__item-btn-edit, .taskList__item-btn-delete
+      position: absolute
+      top: 10px
+      left: calc( 100% - 120px)
+      width: 50px
+      padding: 5px 10px
+      border: none
+      border-radius: 5px
+      background-color: $color3
+      color: $color2
+      transition: .1s
+      cursor: pointer
+      &:hover
+        background-color: rgba(43,89,117,.9)
+    .taskList__item-btn-delete
+      left: calc( 100% - 60px)
+      padding: 5px 5px
+      background-color: crimson
+      color: cornsilk
+      &:hover
+        background-color: crimson
+        opacity: .8

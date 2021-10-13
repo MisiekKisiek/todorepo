@@ -17,6 +17,7 @@ class TaskItemStore {
       deadline: observable,
       checked: observable,
       editTask: action,
+      checkTask: action,
     });
     this.id = id
     this.title = title
@@ -62,6 +63,7 @@ class TaskStore {
   removeTask = (id) => {
     const taskIndex = this.taskList.findIndex(e => e.id === id);
     this.taskList.splice(taskIndex, 1);
+    this.isEditing = false;
   }
 
   setActiveTask = (id) => {
